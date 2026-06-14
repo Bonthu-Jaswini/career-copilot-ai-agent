@@ -155,6 +155,22 @@ Format clearly with headings.
 
     document.getElementById("interviewData").innerHTML =
         `AI will generate interview questions soon`;
+    // ================= SKILL PROGRESS =================
+let dynamicSkills = document.getElementById("dynamicSkills");
+dynamicSkills.innerHTML = "";
+
+skills.forEach(skill => {
+    let progress = Math.floor(Math.random() * 41) + 60; // 60-100%
+
+    dynamicSkills.innerHTML += `
+        <div class="progress-item">
+            <p>${skill.toUpperCase()} - ${progress}%</p>
+            <div class="progress-bar">
+                <div class="fill" style="width:${progress}%"></div>
+            </div>
+        </div>
+    `;
+});
 
     // ================= CAREERS =================
     let careerGrid = document.getElementById("careerGrid");
