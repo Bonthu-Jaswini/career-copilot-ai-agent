@@ -3,79 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Career Copilot AI</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Career Copilot AI Agent</title>
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css"/>
 </head>
-
 <body>
 
 <div class="container">
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <h2 class="logo">Copilot AI</h2>
+  <aside class="sidebar">
+    <h2>Career Copilot</h2>
+    <ul>
+      <li onclick="showSection('dashboard')" class="active">Dashboard</li>
+      <li onclick="showSection('profile')">Profile</li>
+      <li onclick="showSection('skill')">Skill Analysis</li>
+      <li onclick="showSection('roadmap')">Roadmap</li>
+      <li onclick="showSection('tasks')">Daily Tasks</li>
+      <li onclick="showSection('interview')">Mock Interview</li>
+      <li onclick="showSection('resume')">Resume Review</li>
+      <li onclick="showSection('settings')">Settings</li>
+    </ul>
+  </aside>
 
-    <a href="#">Dashboard</a>
-    <a href="#">Profile</a>
-    <a href="#">Skill Analysis</a>
-    <a href="#">Roadmap</a>
-    <a href="#">Daily Tasks</a>
-    <a href="#">Mock Interview</a>
-    <a href="#">Resume Review</a>
-    <a href="#">Certifications</a>
-    <a href="#">Projects</a>
-    <a href="#">Progress</a>
-    <a href="#">Achievements</a>
-    <a href="#">Settings</a>
-  </div>
+  <main class="main-content">
 
-  <!-- MAIN -->
-  <div class="main">
-
-    <!-- TOP BAR -->
     <div class="topbar">
-      <input type="text" placeholder="Search..." />
-      <div class="icons">
-        🔔
-        <img src="https://i.pravatar.cc/40" />
-      </div>
-    </div>
+      <input type="text" id="searchInput" placeholder="Search...">
 
-    <!-- HERO -->
-    <div class="hero">
-      <div class="hero-card">
-        <h1>Career Score</h1>
-        <div class="score-circle">
-          <span>78%</span>
+      <div class="ai-status-panel">
+        <span id="aiStatusText">🤖 Waiting for analysis...</span>
+      </div>
+
+      <div class="top-icons">
+        <div class="score-box">
+          <span>💎</span>
+          <span>1245</span>
         </div>
-        <p>AI-powered skill analysis in progress</p>
+
+        <div class="bell">🔔</div>
+
+        <div class="profile-box" id="profilePreview">👤</div>
+        <input type="file" id="profileUpload" accept="image/*" hidden>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard-section">
+
+      <section class="welcome-banner">
+        <div class="banner-left">
+          <h1 id="welcomeText">Hey 👋</h1>
+          <h2>Let's build your successful future</h2>
+          <p>
+            Get personalized career recommendations, identify skill gaps,
+            and build your learning roadmap with AI.
+          </p>
+
+          <button class="analyze-btn" onclick="analyzeProfile()" id="analyzeBtn">
+            Analyze My Profile
+          </button>
+        </div>
+
+        <div class="banner-center">
+          <img src="assets/robot.png" alt="AI Robot">
+        </div>
+
+        <div class="banner-right">
+          <div class="feature-pill">🎯 Career Recommendations</div>
+          <div class="feature-pill">📊 Skill Gap Analysis</div>
+          <div class="feature-pill">🗺 Personalized Roadmaps</div>
+          <div class="feature-pill">🤖 AI Interview Prep</div>
+        </div>
+      </section>
+
+      <div id="input-section">
+        <h2>Enter Your Profile</h2>
+
+        <input id="name" placeholder="Enter Name">
+
+        <select id="degree">
+          <option value="">Select Degree</option>
+          <option>B.Tech CSE</option>
+          <option>B.Tech IT</option>
+          <option>B.Tech ECE</option>
+          <option>B.Tech EEE</option>
+          <option>BCA</option>
+          <option>BSc Computer Science</option>
+          <option>MCA</option>
+          <option>M.Tech</option>
+          <option>BBA</option>
+          <option>Other</option>
+        </select>
+
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion('skills-box')">
+            ▼ Select Skills
+          </div>
+
+          <div id="skills-box" class="accordion-content">
+            <input type="checkbox" value="html" class="skill"> HTML<br>
+            <input type="checkbox" value="css" class="skill"> CSS<br>
+            <input type="checkbox" value="javascript" class="skill"> JavaScript<br>
+            <input type="checkbox" value="python" class="skill"> Python<br>
+            <input type="checkbox" value="sql" class="skill"> SQL<br>
+            <input type="checkbox" value="dsa" class="skill"> DSA<br>
+            <input type="checkbox" value="react" class="skill"> React<br>
+            <input type="checkbox" value="java" class="skill"> Java<br>
+            <input type="checkbox" value="ml" class="skill"> Machine Learning<br>
+            <input type="checkbox" value="cloud" class="skill"> Cloud Computing<br>
+            <input type="checkbox" value="communication" class="skill"> Communication<br>
+          </div>
+        </div>
+
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion('goals-box')">
+            ▼ Career Interests
+          </div>
+
+          <div id="goals-box" class="accordion-content">
+            <input type="checkbox" value="ai" class="goal"> AI Engineer<br>
+            <input type="checkbox" value="software" class="goal"> Software Engineer<br>
+            <input type="checkbox" value="data" class="goal"> Data Scientist<br>
+            <input type="checkbox" value="cyber" class="goal"> Cybersecurity<br>
+            <input type="checkbox" value="cloud" class="goal"> Cloud Engineer<br>
+            <input type="checkbox" value="fullstack" class="goal"> Full Stack Developer<br>
+            <input type="checkbox" value="devops" class="goal"> DevOps Engineer<br>
+            <input type="checkbox" value="mobile" class="goal"> Mobile Developer<br>
+            <input type="checkbox" value="ux/ui" class="goal"> UI/UX Designer<br>
+          </div>
+        </div>
+
+        <button onclick="generateAnalysis()">Generate AI Analysis</button>
       </div>
 
-      <div class="hero-image">
-        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png"/>
+      <div id="output-section"></div>
+
+      <section class="progress-section">
+    <h2>Skill Progress</h2>
+    <div id="dynamicSkills"></div>
+</section>
+
+      <section class="career-section">
+        <h2>Recommended Careers</h2>
+        <div class="career-grid" id="careerGrid"></div>
+      </section>
+    </div>
+
+    <!-- SECTIONS -->
+    <div id="profile-section" style="display:none">
+      <h1>Profile</h1>
+      <div id="profileData" class="info-box">No profile generated yet.</div>
+    </div>
+
+    <div id="skill-section" style="display:none">
+      <h1>Skill Analysis</h1>
+      <div id="skillData" class="info-box">No analysis yet.</div>
+    </div>
+
+    <div id="roadmap-section" style="display:none">
+      <h1>Roadmap</h1>
+      <div class="info-box" id="roadmapData">Generate analysis first.</div>
+    </div>
+
+    <div id="tasks-section" style="display:none">
+      <h1>Daily Tasks</h1>
+      <div class="info-box" id="taskData">Generate analysis first.</div>
+    </div>
+
+    <div id="interview-section" style="display:none">
+      <h1>Mock Interview</h1>
+      <div class="info-box" id="interviewData">Generate analysis first.</div>
+    </div>
+
+    <div id="resume-section" style="display:none">
+      <h1>Resume Review</h1>
+
+      <div class="resume-upload-box">
+        <input type="file" id="resumeUpload" accept=".pdf,.doc,.docx">
+        <button class="resume-btn" onclick="uploadResume()">Upload Resume</button>
+        <div id="resumeResult"></div>
       </div>
     </div>
 
-    <!-- ROW 2 -->
-    <div class="grid-3">
-      <div class="card">Skill Gap Analysis</div>
-      <div class="card">Career Roadmap</div>
-      <div class="card">AI Interview Coach</div>
+    <div id="settings-section" style="display:none">
+      <h1>Settings</h1>
+      <div class="info-box">
+        Theme: Dark Mode <br>
+        Notifications: ON
+      </div>
     </div>
 
-    <!-- ROW 3 -->
-    <div class="grid-2">
-      <div class="card">Certifications</div>
-      <div class="card">Recommendations</div>
+    <div class="chat-widget">
+      <div class="chat-header">🤖 AI Copilot</div>
+
+      <div class="chat-body" id="chatBody">
+        <p><b>AI:</b> Hello! Need career guidance?</p>
+      </div>
+
+      <div class="chat-input-box">
+        <input type="text" id="chatInput" placeholder="Ask AI...">
+        <button onclick="sendMessage()">Send</button>
+      </div>
     </div>
 
-  </div>
-
+  </main>
 </div>
 
+<script src="script.js"></script>
 </body>
 </html>
