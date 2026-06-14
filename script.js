@@ -20,7 +20,7 @@ function showSection(section) {
     if (target) target.style.display = "block";
 }
 
-// ================== AI STATUS (FAKE LOADING UI ONLY) ==================
+// ================== AI STATUS ==================
 function analyzeProfile() {
     let btn = document.getElementById("analyzeBtn");
     let status = document.getElementById("aiStatusText");
@@ -30,13 +30,13 @@ function analyzeProfile() {
     status.innerHTML = "🤖 AI is thinking...";
 
     setTimeout(() => {
-        btn.innerHTML = "Run AI Analysis";
+        btn.innerHTML = "Analyze My Profile";
         btn.disabled = false;
         status.innerHTML = "🤖 Ready for AI Analysis";
     }, 1500);
 }
 
-// ================== REAL AI CHAT (GROQ BACKEND) ==================
+// ================== CHAT AI ==================
 async function sendMessage() {
     let input = document.getElementById("chatInput");
     let chatBody = document.getElementById("chatBody");
@@ -63,10 +63,11 @@ async function sendMessage() {
 
     } catch (err) {
         chatBody.innerHTML += `<p><b>AI:</b> Server Error ❌</p>`;
+        console.log(err);
     }
 }
 
-// ================== REAL AI PROFILE ANALYSIS ==================
+// ================== PROFILE AI ANALYSIS ==================
 async function generateAnalysis() {
     let name = document.getElementById("name").value.trim();
     let degree = document.getElementById("degree").value;
@@ -84,6 +85,10 @@ async function generateAnalysis() {
         alert("Please fill all fields");
         return;
     }
+
+    // LOADING UI
+    document.getElementById("output-section").innerHTML =
+        "<h3>🤖 AI analyzing your profile...</h3>";
 
     let prompt = `
 You are Career Copilot AI.
@@ -115,15 +120,18 @@ Format clearly with headings.
 
         const data = await res.json();
 
-        document.getElementById("output-section").innerHTML =
-            `<h2>🤖 AI Career Analysis</h2><pre>${data.reply}</pre>`;
+        document.getElementById("output-section").innerHTML = `
+            <h2>AI Analysis for ${name}</h2>
+            <pre style="white-space:pre-wrap">${data.reply}</pre>
+        `;
 
     } catch (err) {
-        alert("AI Error. Try again.");
+        console.log(err);
+        document.getElementById("output-section").innerHTML =
+            "❌ AI Error. Try again";
     }
 
-    // ================= UI UPDATES (YOUR ORIGINAL LOGIC) =================
-
+    // ================= UI UPDATES =================
     document.getElementById("welcomeText").innerHTML = `Hey ${name} 👋`;
 
     document.getElementById("chatBody").innerHTML =
@@ -140,7 +148,7 @@ Format clearly with headings.
         `<p>${skills.join(", ")}</p>`;
 
     document.getElementById("roadmapData").innerHTML =
-        `AI Generated roadmap will appear above 👆`;
+        `AI Generated roadmap will appear here`;
 
     document.getElementById("taskData").innerHTML =
         `Complete daily coding + projects`;
@@ -148,7 +156,7 @@ Format clearly with headings.
     document.getElementById("interviewData").innerHTML =
         `AI will generate interview questions soon`;
 
-    // ================= CAREER CARDS (SIMPLE) =================
+    // ================= CAREERS =================
     let careerGrid = document.getElementById("careerGrid");
     careerGrid.innerHTML = "";
 
